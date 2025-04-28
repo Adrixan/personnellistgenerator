@@ -5,12 +5,12 @@ from detail import create_details
 import datetime
 
 x = datetime.datetime.now()
-basedir = "../content/de/Schule/"
+basedir = "../petersgasse.at/content/de/Schule/"
 imgdir = "/images/personal/"
-imgsourcedir = "/home/Adrixan/lehrerfotos/"
-imgoutdir = "../static/images/personal/"
+imgsourcedir = "../lehrerfotos/"
+imgoutdir = "../petersgasse.at/static/images/personal/"
 
-excelname = "Lehrer_Verwaltung.xlsx"
+excelname = "../lehrerfotos/Lehrer_Verwaltung.xlsx"
 
 teachers = convert_excel_to_teachers(excelname)
 admins = convert_excel_to_admins(excelname)
