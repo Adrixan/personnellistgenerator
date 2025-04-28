@@ -6,15 +6,17 @@ x = datetime.datetime.now()
 
 def create_details(teachers, basedir, imgdir, imgsourcedir, imgoutdir):
     for teacher in teachers:
-        with open(basedir + "personal/" + teacher.name + "-" + teacher.surname + ".md", "w") as f:
+        name = teacher.name.replace(' ', '-')
+        surname = teacher.surname.replace(' ', '-')
+        with open(basedir + "personal/" + name + "-" + surname + ".md", "w") as f:
             f.write(create_detail(teacher, imgdir, imgsourcedir, imgoutdir))
 
 def prepare_image(name, sourceimage, imgoutdir):
     size = 400, 400
     outfile = imgoutdir + name + ".jpg"
     if not os.path.isfile(sourceimage):
-        sourceimage = sourceimage.replace(".jpg", ".JPG")
-        print(sourceimage)
+        sourceimage = sourceimage.replace(".jpg", ".JPG").replace('ß','ss')
+#        print(sourceimage)
         if not os.path.isfile(sourceimage):
             print(f"No image for: {name}")
             return
@@ -29,7 +31,7 @@ def prepare_image(name, sourceimage, imgoutdir):
 
 
 def create_detail(teacher, imgdir, imgsourcedir, imgoutdir):
-    print(f"Working on {teacher.surname}")
+#    print(f"Working on {teacher.surname}")
     datestring = x.strftime("%Y-%m-%d")
 
     prepare_image(teacher.surname, imgsourcedir + teacher.surname+".jpg", imgoutdir)
@@ -40,6 +42,8 @@ identifier = "{teacher.name.lower}-{teacher.surname.lower}"
 date = "{datestring}"
 draft = false
 +++
+
+ [Zurück zur Übersicht](/schule/personen/)
 
 <div class="row">
 <div class="column">
