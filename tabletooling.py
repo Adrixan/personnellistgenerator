@@ -20,7 +20,7 @@ def create_teacher_table(teachers):
         surname = t.surname.replace(' ', '-')
         result = result + f'''
             <tr>
-                <td><a href=/schule/personal/{name.lower()}-{surname.lower()}/>{t.build_name()}</a></td>
+                <td><a href=/schule/personal/{name.lower()}-{surname.lower()}/>{t.build_name_short()}</a></td>
                 <td>{t.officehour_day}</td>
                 <td>{t.officehour_lesson}</td>
                 <td>{t.kv}</td>

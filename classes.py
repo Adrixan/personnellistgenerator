@@ -26,6 +26,9 @@ class Teacher:
             name = name + " " + self.title_post
         return(name)
 
+    def build_name_short(self):
+        return(self.name + " " + self.surname)
+
 @dataclass
 class Admin:
     function: str
