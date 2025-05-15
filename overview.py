@@ -3,12 +3,42 @@ import datetime
 
 x = datetime.datetime.now()
 
-def create_overview(teachers, admins):
+def create_overview_teachers(teachers):
     datestring = x.strftime("%Y-%m-%d")
 
     result = '''
 +++
-identifier = "personen"
+identifier = "lehrpersonal"
+date = "'''
+
+    result = result + datestring + '''"
+draft = false
++++
+
+'''
+
+    result = result +  '''
+{{< rawhtml >}}
+<h1>Lehrer:innen:</h1>
+<p>Für mehr Informationen, bitte den Namen auswählen!</p>
+'''
+
+    result = result + create_teacher_table(teachers) + '''
+
+    <script>
+        new DataTable('#teachers');
+    </script>
+{{< /rawhtml >}}
+'''
+
+    return result
+
+def create_overview_admins(admins):
+    datestring = x.strftime("%Y-%m-%d")
+
+    result = '''
++++
+identifier = "adminpersonen"
 date = "'''
 
     result = result + datestring + '''"
@@ -22,14 +52,7 @@ draft = false
 
     result = result + create_admin_table(admins) + '''
 
-<h1>Lehrer:innen:</h1>
-<p>Für mehr Informationen, bitte den Namen auswählen!</p>
-'''
-
-    result = result + create_teacher_table(teachers) + '''
-
     <script>
-        new DataTable('#teachers');
         new DataTable('#admins', {order: [[2, 'desc']]});
     </script>
 {{< /rawhtml >}}

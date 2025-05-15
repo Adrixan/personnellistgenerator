@@ -1,6 +1,6 @@
 from exceltooling import convert_excel_to_admins, convert_excel_to_teachers
 from tabletooling import create_teacher_table, create_admin_table
-from overview import create_overview
+from overview import create_overview_teachers, create_overview_admins
 from detail import create_details
 import datetime
 
@@ -16,7 +16,10 @@ teachers = convert_excel_to_teachers(excelname)
 admins = convert_excel_to_admins(excelname)
 
 
-with open(basedir + "personen.md", "w") as f:
-    f.write(create_overview(teachers, admins))
+with open(basedir + "lehrpersonal.md", "w") as f:
+    f.write(create_overview_teachers(teachers))
+
+with open(basedir + "adminpersonen.md", "w") as f:
+    f.write(create_overview_admins(admins))
 
 create_details(teachers, basedir, imgdir, imgsourcedir, imgoutdir)

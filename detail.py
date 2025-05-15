@@ -51,7 +51,7 @@ draft = false
 </div>
 <div class="column">
 
-# {teacher.name} {teacher.surname}
+# {teacher.build_name()}
 
 Sprechstunde am {teacher.officehour_day} um {teacher.officehour_lesson}
 
