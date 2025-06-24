@@ -16,6 +16,7 @@ class Teacher:
     officehour_lesson: int
     afternoon: bool
     remarks: str
+    no_img: bool
 
     def build_name(self):
         name = ""

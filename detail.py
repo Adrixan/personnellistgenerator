@@ -1,5 +1,5 @@
 from classes import Teacher
-import datetime, os, sys
+import datetime, os, sys, shutil
 from PIL import Image
 
 x = datetime.datetime.now()
@@ -11,14 +11,16 @@ def create_details(teachers, basedir, imgdir, imgsourcedir, imgoutdir):
         with open(basedir + "personal/" + name + "-" + surname + ".md", "w") as f:
             f.write(create_detail(teacher, imgdir, imgsourcedir, imgoutdir))
 
-def prepare_image(name, sourceimage, imgoutdir):
+def prepare_image(name, imgsourcedir, imgoutdir, no_img):
     size = 400, 400
     outfile = imgoutdir + name + ".jpg"
-    if not os.path.isfile(sourceimage):
+    sourceimage = imgsourcedir + name+".jpg"
+    if not os.path.isfile(sourceimage) or no_img:
         sourceimage = sourceimage.replace(".jpg", ".JPG").replace('ß','ss')
 #        print(sourceimage)
-        if not os.path.isfile(sourceimage):
+        if not os.path.isfile(sourceimage) or no_img:
             print(f"No image for: {name}")
+            shutil.copy(imgsourcedir + "_generic_teacher.jpg", imgoutdir + name + ".jpg")
             return
 
     try:
@@ -34,7 +36,8 @@ def create_detail(teacher, imgdir, imgsourcedir, imgoutdir):
 #    print(f"Working on {teacher.surname}")
     datestring = x.strftime("%Y-%m-%d")
 
-    prepare_image(teacher.surname, imgsourcedir + teacher.surname+".jpg", imgoutdir)
+
+    prepare_image(teacher.surname, imgsourcedir, imgoutdir, teacher.no_img)
 
     result = f'''
 +++
@@ -43,7 +46,7 @@ date = "{datestring}"
 draft = false
 +++
 
- [Zurück zur Übersicht](/schule/personen/)
+ [Zurück zur Übersicht](/schule/lehrpersonal/)
 
 <div class="row">
 <div class="column">

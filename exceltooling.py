@@ -4,7 +4,7 @@ from mapping import TEACHER_TITLE_PRE, TEACHER_NAME, TEACHER_SURNAME, \
 TEACHER_TITLE_POST, TEACHER_KV, TEACHER_KVSTV, TEACHER_SUBJECTS, \
 TEACHER_COURSES_1, TEACHER_COURSES_2, TEACHER_COORDINATOR, \
 TEACHER_OFFICEHOUR_DAY, TEACHER_OFFICEHOUR_LESSON, TEACHER_AFTERNOON, \
-TEACHER_REMARKS, ADMIN_FUNCTION, ADMIN_NAME, ADMIN_SURNAME, ADMIN_TITLE_POST,\
+TEACHER_REMARKS, TEACHER_NOIMG, ADMIN_FUNCTION, ADMIN_NAME, ADMIN_SURNAME, ADMIN_TITLE_POST,\
 ADMIN_TITLE_PRE
 
 def xstr(s):
@@ -12,6 +12,12 @@ def xstr(s):
         return ''
     else:
         return str(s)
+
+def booleanize(s):
+    if s is None:
+        return False
+    else:
+        return True
 
 def excel_split(inputlist):
     outputlist = []
@@ -107,7 +113,8 @@ def convert_excel_to_teachers(infile):
             courses_1=courses1, courses_2=courses2, coordinator=xstr(row[TEACHER_COORDINATOR]), \
             officehour_day=to_weekday(row[TEACHER_OFFICEHOUR_DAY]), \
             officehour_lesson=lesson_to_hour_string(row[TEACHER_OFFICEHOUR_LESSON]), \
-            afternoon=xstr(row[TEACHER_AFTERNOON]), remarks=row[TEACHER_REMARKS])
+            afternoon=xstr(row[TEACHER_AFTERNOON]), remarks=row[TEACHER_REMARKS], \
+            no_img=booleanize(row[TEACHER_NOIMG])) 
         teachers.append(teacher)
     return teachers
 
