@@ -11,14 +11,14 @@ def create_details(teachers, basedir, imgdir, imgsourcedir, imgoutdir):
         with open(basedir + "personal/" + name + "-" + surname + ".md", "w") as f:
             f.write(create_detail(teacher, imgdir, imgsourcedir, imgoutdir))
 
-def prepare_image(name, imgsourcedir, imgoutdir, no_img):
+def prepare_image(name, imgsourcedir, imgoutdir, img):
     size = 400, 400
     outfile = imgoutdir + name + ".jpg"
     sourceimage = imgsourcedir + name+".jpg"
-    if not os.path.isfile(sourceimage) or no_img:
+    if not os.path.isfile(sourceimage) or not img:
         sourceimage = sourceimage.replace(".jpg", ".JPG").replace('ß','ss')
 #        print(sourceimage)
-        if not os.path.isfile(sourceimage) or no_img:
+        if not os.path.isfile(sourceimage) or not img:
             print(f"No image for: {name}")
             shutil.copy(imgsourcedir + "_generic_teacher.jpg", imgoutdir + name + ".jpg")
             return
@@ -37,7 +37,7 @@ def create_detail(teacher, imgdir, imgsourcedir, imgoutdir):
     datestring = x.strftime("%Y-%m-%d")
 
 
-    prepare_image(teacher.surname, imgsourcedir, imgoutdir, teacher.no_img)
+    prepare_image(teacher.surname, imgsourcedir, imgoutdir, teacher.img)
 
     result = f'''
 +++
@@ -72,11 +72,12 @@ Fächer: {', '.join(teacher.subjects)}
 
 {f"Koordination für: {teacher.coordinator}" if teacher.coordinator else ""}
 
+{f"Nachmittagsbetreuung" if teacher.afternoon else ""}
+
 </div>
 </div> 
 
 '''
-# TODO Add Nachmittagsbetreuung
-# Nachmittagsbetreuung: {teacher.afternoon}
+
 
     return result
