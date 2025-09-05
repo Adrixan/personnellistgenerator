@@ -20,6 +20,8 @@ draft = false
     result = result +  '''
 {{< rawhtml >}}
 <h1>Lehrer:innen:</h1>
+<p>Die Kommunikation zwischen Erziehungsberechtigten und der Lehrerschaft erfolgt ausschließlich über WebUntis.</p> 
+<p>Sollte WebUntis nicht zur Verfügung stehen, können Sie uns jederzeit per E-Mail - Vorname.Nachname@petersgasse.at - kontaktieren.</p>
 <p>Für mehr Informationen, bitte den Namen auswählen!</p>
 '''
 

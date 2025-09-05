@@ -22,13 +22,13 @@ class Teacher:
         name = ""
         if self.title_pre is not None:
             name = name + self.title_pre + " "
-        name = name + self.name + " " + self.surname
+        name = name + self.surname + " " + self.name
         if self.title_post is not None:
             name = name + " " + self.title_post
         return(name)
 
     def build_name_short(self):
-        return(self.name + " " + self.surname)
+        return(self.surname + " " + self.name)
 
 @dataclass
 class Admin:
@@ -41,7 +41,7 @@ class Admin:
             name = ""
             if self.title_pre is not None:
                 name = name + self.title_pre + " "
-            name = name + self.name + " " + self.surname
+            name = name + self.surname + " " + self.name
 #            if self.title_post is not None:
 #                name = name + " " + self.title_post
             return(name)
