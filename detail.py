@@ -11,6 +11,14 @@ def create_details(teachers, basedir, imgdir, imgsourcedir, imgoutdir):
         with open(basedir + "personal/" + name + "-" + surname + ".md", "w") as f:
             f.write(create_detail(teacher, imgdir, imgsourcedir, imgoutdir))
 
+def create_details_admin(admins, basedir, imgdir, imgsourcedir, imgoutdir):
+    for admin in admins:
+        name = admin.name.replace(' ', '-')
+        surname = admin.surname.replace(' ', '-')
+        with open(basedir + "personal/" + name + "-" + surname + ".md", "w") as f:
+            f.write(create_detail_admin(admin, imgdir, imgsourcedir, imgoutdir))
+
+
 def prepare_image(name, imgsourcedir, imgoutdir, img):
     size = 400, 400
     outfile = imgoutdir + name + ".jpg"
@@ -55,8 +63,9 @@ draft = false
 <div class="column">
 
 # {teacher.build_name()}
+## {teacher.untis}
 
-Sprechstunde am {teacher.officehour_day} um {teacher.officehour_lesson}
+Sprechstunde am {teacher.officehour_day} um {teacher.officehour_lesson} in Raum: {teacher.officehour_room}
 
 Fächer: {', '.join(teacher.subjects)}
 
@@ -81,3 +90,43 @@ Fächer: {', '.join(teacher.subjects)}
 
 
     return result
+
+def create_detail_admin(admin, imgdir, imgsourcedir, imgoutdir):
+#    print(f"Working on {teacher.surname}")
+    datestring = x.strftime("%Y-%m-%d")
+
+
+    prepare_image(admin.surname, imgsourcedir, imgoutdir, admin.img)
+
+    result = f'''
++++
+identifier = "{admin.name.lower}-{admin.surname.lower}"
+date = "{datestring}"
+draft = false
++++
+
+ [Zurück zur Übersicht](/schule/adminpersonen/)
+
+<div class="row">
+<div class="column">
+<img src="{imgdir}{admin.surname}.jpg" alt="{admin.name} {admin.surname}"> 
+</div>
+<div class="column">
+
+# {admin.build_name()}
+
+{f"Erreichbarkeit: {admin.officehour}>" if admin.officehour else ""}
+
+{f"E-Mail: <a href=\"mailto:{admin.email}\">{admin.email}</a>" if admin.email else ""}
+
+
+{f"Telefon: <a href=\"tel:{admin.tel}\">{admin.tel}</a>" if admin.tel else ""}
+</div>
+</div> 
+
+'''
+
+
+    return result
+
+

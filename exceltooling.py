@@ -1,11 +1,11 @@
 from openpyxl import load_workbook
 from classes import Teacher, Admin
-from mapping import TEACHER_TITLE_PRE, TEACHER_NAME, TEACHER_SURNAME, \
+from mapping import TEACHER_TITLE_PRE, TEACHER_NAME, TEACHER_SURNAME, TEACHER_UNTIS, \
 TEACHER_TITLE_POST, TEACHER_KV, TEACHER_KVSTV, TEACHER_SUBJECTS, \
 TEACHER_COURSES_1, TEACHER_COURSES_2, TEACHER_COORDINATOR, \
-TEACHER_OFFICEHOUR_DAY, TEACHER_OFFICEHOUR_LESSON, TEACHER_AFTERNOON, \
-TEACHER_REMARKS, TEACHER_IMG, ADMIN_FUNCTION, ADMIN_NAME, ADMIN_SURNAME, ADMIN_TITLE_POST,\
-ADMIN_TITLE_PRE
+TEACHER_OFFICEHOUR_DAY, TEACHER_OFFICEHOUR_LESSON, TEACHER_OFFICEHOUR_ROOM, TEACHER_AFTERNOON, \
+TEACHER_REMARKS, TEACHER_IMG, ADMIN_FUNCTION, ADMIN_NAME, ADMIN_SURNAME,\
+ADMIN_TITLE_PRE, ADMIN_EMAIL, ADMIN_TEL, ADMIN_OFFICEHOUR
 
 def xstr(s):
     if s is None:
@@ -51,7 +51,7 @@ def to_weekday(shorthand: str):
         return ""
 
 def lesson_to_time(lesson: int):
-    if lesson is not None:
+    if lesson is not None: 
         match lesson:
             case 1:
                 return "7:35-8:25"
@@ -77,6 +77,10 @@ def lesson_to_time(lesson: int):
                 return "16:30-17:20"
             case 12:
                 return "17:20-18:10"
+            case _:
+                return " "
+    else:
+        return " "
 
 def lesson_to_hour_string(lesson_string: str):
     if lesson_string is not None:
@@ -86,7 +90,7 @@ def lesson_to_hour_string(lesson_string: str):
             for l in lesson_strings:
                 times.append(lesson_to_time(int(l)))
         else:
-            times = [lesson_to_time(int(lesson_string))]
+            times = [lesson_to_time(lesson_string)]
         
         counter = 0
         result = ""
@@ -101,7 +105,7 @@ def lesson_to_hour_string(lesson_string: str):
 
 def convert_excel_to_teachers(infile):
     workbook = load_workbook(filename=infile, read_only=True)
-    sheet = workbook["Lehrer"]
+    sheet = workbook["LehrerInnen"]
 
     teachers = []
     for row in sheet.iter_rows(min_row=2, values_only=True):
@@ -112,10 +116,11 @@ def convert_excel_to_teachers(infile):
         courses2 = excel_split(row[TEACHER_COURSES_2])
         teacher = Teacher(title_pre=xstr(row[TEACHER_TITLE_PRE]), name=xstr(row[TEACHER_NAME]), \
             surname = xstr(row[TEACHER_SURNAME]), title_post=xstr(row[TEACHER_TITLE_POST]), \
-            kv=xstr(row[TEACHER_KV]), kvstv=xstr(row[TEACHER_KVSTV]), subjects=subjects, \
+            kv=xstr(row[TEACHER_KV]), kvstv=xstr(row[TEACHER_KVSTV]), untis=row[TEACHER_UNTIS], subjects=subjects, \
             courses_1=courses1, courses_2=courses2, coordinator=xstr(row[TEACHER_COORDINATOR]), \
             officehour_day=to_weekday(row[TEACHER_OFFICEHOUR_DAY]), \
             officehour_lesson=lesson_to_hour_string(row[TEACHER_OFFICEHOUR_LESSON]), \
+            officehour_room=xstr(row[TEACHER_OFFICEHOUR_ROOM]), \
             afternoon=booleanize(row[TEACHER_AFTERNOON]), remarks=row[TEACHER_REMARKS], \
             img=booleanize(row[TEACHER_IMG])) 
         teachers.append(teacher)
@@ -128,7 +133,8 @@ def convert_excel_to_admins(infile):
 
     for row in sheet.iter_rows(min_row=2, values_only=True):
         admin = Admin(function=row[ADMIN_FUNCTION], title_pre=row[ADMIN_TITLE_PRE],\
-            name=row[ADMIN_NAME], surname = row[ADMIN_SURNAME])
+            name=row[ADMIN_NAME], surname = row[ADMIN_SURNAME], email = xstr(row[ADMIN_EMAIL]), \
+            tel = xstr(row[ADMIN_TEL]), officehour = xstr(row[ADMIN_OFFICEHOUR]), img = True)
         admins.append(admin)
     
     return admins

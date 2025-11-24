@@ -49,6 +49,8 @@ draft = false
 {{< rawhtml >}}
 <h1>Administratives Personal:</h1>
 
+Für Kontaktmöglichkeiten, sowie Sprechstundentermine, klicken Sie bitte auf die entsprechende Person!
+
 
 '''
 

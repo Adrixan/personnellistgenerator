@@ -6,6 +6,7 @@ def create_teacher_table(teachers):
         <thead>
             <tr>
                 <th>Name</th>
+                <th>Kürzel</th>
                 <th>Tag der Sprechstunde</th>
                 <th>Sprechstunde</th>
                 <th>KV:in</th>
@@ -21,6 +22,7 @@ def create_teacher_table(teachers):
         result = result + f'''
             <tr>
                 <td><a href=/schule/personal/{name.lower()}-{surname.lower()}/>{t.build_name_short()}</a></td>
+                <td>{t.untis}</td>
                 <td>{t.officehour_day}</td>
                 <td>{t.officehour_lesson}</td>
                 <td>{t.kv}</td>
@@ -33,6 +35,7 @@ def create_teacher_table(teachers):
         <tfoot>
             <tr>
                 <th>Name</th>
+                <th>Kürzel</th>
                 <th>Tag der Sprechstunde</th>
                 <th>Sprechstunde</th>
                 <th>KV:in</th>
@@ -56,9 +59,11 @@ def create_admin_table(admins):
     '''
 
     for a in admins:
+        name = a.name.replace(' ', '-')
+        surname = a.surname.replace(' ', '-')
         result = result + f'''
             <tr>
-                <td>{a.build_name()}</td>
+                <td><a href=/schule/personal/{name.lower()}-{surname.lower()}/>{a.build_name_short()}</a></td>
                 <td>{a.function}</td>
             </tr>
         '''
