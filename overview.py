@@ -28,7 +28,7 @@ draft = false
     result = result + create_teacher_table(teachers) + '''
 
     <script>
-        new DataTable('#teachers');
+        new DataTable('#teachers', { columnDefs: [{ target: 0, visible: false, searchable: false}]});
     </script>
 {{< /rawhtml >}}
 '''
