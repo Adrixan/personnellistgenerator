@@ -46,6 +46,8 @@ def create_detail(teacher, imgdir, imgsourcedir, imgoutdir):
 
 
     prepare_image(teacher.surname, imgsourcedir, imgoutdir, teacher.img)
+    if not teacher.img:
+        print (f"{teacher.surname} {teacher.name} has no image set")
 
     result = f'''
 +++
@@ -58,7 +60,7 @@ draft = false
 
 <div class="row">
 <div class="column">
-<img src="{imgdir}{teacher.surname}.jpg" alt="{teacher.name} {teacher.surname}"> 
+{ f"<img src=\"{imgdir}{teacher.surname}.jpg\" alt=\"{teacher.name} {teacher.surname}\">" if teacher.img else f"<img src=\"{imgdir}_generic_teacher.jpg\" alt=\"{teacher.name} {teacher.surname}\">"}
 </div>
 <div class="column">
 
